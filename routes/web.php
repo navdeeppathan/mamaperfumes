@@ -188,15 +188,32 @@ Route::middleware(['auth', 'role:inventory_manager'])->group(function () {
         $categories = Category::count();
         $expiringsoon = Product::where('shelf_life', '<', 3)->count();
         $lowstock = Product::where('quantity', '<', 10)->count();
-        $criticalExpiry = Product::all()->filter(function ($product) {
+        $criticalExpiry = Product::whereHas('locations', function ($q) {
+            $q->whereBetween('expiry_date', [
+                now(),
+                now()->addDays(8)
+            ]);
+        })
+        ->with(['locations' => function ($q) {
+            $q->whereBetween('expiry_date', [
+                now(),
+                now()->addDays(8)
+            ]);
+        }])
+        ->get();
 
-            $expiry = Carbon::parse($product->created_at)
-                ->addDays($product->shelf_life);
+        // Today's deliveries
+        $todaysDeliveries = Order::whereDate('delivery_date', Carbon::today())
+            ->where('is_active', 1)
+            ->count();
 
-            return $expiry->between(now(), now()->addDays(8));
-        });
+        // Drivers assigned today (unique drivers)
+        $driversAssigned = Order::whereDate('delivery_date', Carbon::today())
+            ->whereNotNull('assigned_driver')
+            ->distinct('assigned_driver')
+            ->count('assigned_driver');
 
-        return view('Inventory.index', compact('totalSkus', 'categories', 'expiringsoon', 'lowstock', 'criticalExpiry'));
+        return view('Inventory.index', compact('totalSkus', 'categories', 'expiringsoon', 'lowstock', 'criticalExpiry', 'todaysDeliveries', 'driversAssigned'));
 
     });
 
@@ -407,11 +424,6 @@ Route::middleware(['auth', 'role:sale_rep'])->group(function () {
 
 
     Route::get('/sales', [SalesDashboardController::class, 'index']);
-
-
-
-
-
     Route::get('/sales-performance', [SalesPerformanceController::class, 'index'])
         ->middleware('auth');
     Route::get('/sales-profile', [SalesDashboardController::class, 'profile'])

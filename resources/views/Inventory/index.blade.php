@@ -25,8 +25,8 @@
                         <div class="text-slate-500 text-xs font-bold uppercase tracking-wider">Today's Deliveries</div>
                         <span class="text-emerald-600 text-xs font-semibold bg-emerald-50 px-2 py-1 rounded">Active</span>
                     </div>
-                    <div class="text-3xl font-bold text-slate-900 font-display">156</div>
-                    <div class="text-xs text-slate-500 mt-1">23 drivers assigned</div>
+                    <div class="text-3xl font-bold text-slate-900 font-display">{{ $todaysDeliveries }}</div>
+                    <div class="text-xs text-slate-500 mt-1">{{ $driversAssigned }} drivers assigned</div>
                 </div>
                 <div class="glass rounded-2xl p-6 border border-slate-200">
                     <div class="flex justify-between items-start mb-4">

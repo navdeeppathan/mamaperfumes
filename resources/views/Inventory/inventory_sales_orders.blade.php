@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Orders | Sales Rep Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+@extends('Inventory.layouts.app')
+
+@section('content')
+
     <style>
        :root {
             --navy: #0f172a;
@@ -521,15 +516,13 @@
                 }
             }
     </style>
-</head>
-<body>
-<!-- Mobile Overlay -->
-<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>
 
-<!-- Sidebar -->
-<!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <!-- Header -->
+    <!-- Sidebar -->
+    <!-- Sidebar -->
+    {{-- <aside class="sidebar" id="sidebar">
+        
         <div class="sidebar-header">
             <div class="brand-container">
                 <div class="brand-icon">
@@ -545,9 +538,9 @@
             </button>
         </div>
 
-        <!-- Navigation -->
+       
         <nav class="sidebar-nav">
-            <!-- Operations Section -->
+            
             <div class="menu-section" id="section-operations">
                 <div class="section-header" onclick="toggleSection('section-operations')" tabindex="0" role="button" aria-expanded="true">
                     <span class="section-label">Operations</span>
@@ -579,7 +572,7 @@
                 </div>
             </div>
 
-            <!-- Management Section -->
+            
             <div class="menu-section" id="section-management">
                 <div class="section-header" onclick="toggleSection('section-management')" tabindex="0" role="button" aria-expanded="true">
                     <span class="section-label">Management</span>
@@ -600,18 +593,14 @@
                 </div>
             </div>
 
-            <!-- Sales Portal Section -->
+           
             <div class="menu-section" id="section-sales">
                 <div class="section-header" onclick="toggleSection('section-sales')" tabindex="0" role="button" aria-expanded="true">
                     <span class="section-label">Sales Portal</span>
                     <i class="fas fa-chevron-down section-chevron"></i>
                 </div>
                 <div class="section-content">
-                    {{-- <a href="/sales-dashboard" class="nav-item">
-                        <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
-                        <span class="nav-text">Sales Dashboard</span>
-                        <span class="tooltip">Sales Dashboard</span>
-                    </a> --}}
+                    
                     <a href="/sales-orders-inventory" class="nav-item active">
                         <span class="nav-icon"><i class="fas fa-clipboard-list"></i></span>
                         <span class="nav-text">Sales Orders</span>
@@ -621,7 +610,7 @@
             </div>
         </nav>
 
-        <!-- Footer -->
+       
         <div class="sidebar-footer">
             <div class="user-profile" onclick="openProfile()" title="View Profile">
                 <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop" alt="Admin User" class="user-avatar">
@@ -635,17 +624,17 @@
             <button
             type="submit"
              class="logout-btn"
-             {{-- onclick="logout()"  --}}
+             
              aria-label="Logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </button>
             </form>
         </div>
-    </aside>
+    </aside> --}}
 
     <!-- Main Content -->
-    <main class="main-content">
+    
         <!-- Header -->
         <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
             <div class="flex items-center justify-between px-6 py-4">
@@ -882,7 +871,7 @@
                 </div> --}}
             </div>
         </div>
-    </main>
+    
 
     <div id="logsModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
         <div class="bg-white rounded-xl w-[600px] max-h-[80vh] overflow-y-auto p-6">
@@ -1050,5 +1039,5 @@
             }
         }
     </script>
-</body>
-</html>
+
+@endsection
