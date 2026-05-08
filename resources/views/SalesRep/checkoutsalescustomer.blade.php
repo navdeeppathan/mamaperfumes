@@ -166,7 +166,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-4">
-                    <a href="/main" class="flex items-center gap-3">
+                    <a href="/sales" class="flex items-center gap-3">
                         <div
                             class="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl flex items-center justify-center">
                             <i class="fas fa-building text-white"></i>
@@ -220,7 +220,7 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <!-- <span class="text-sm text-slate-500">Order #:</span> -->
-                    <a href="/main">
+                    <a href="/sales-orders2">
 
                         <!-- <span class="font-mono font-semibold text-blue-900 bg-blue-50 px-3 py-1 rounded-lg"> Back</span> -->
                         <button
