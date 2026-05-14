@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-                --navy: #0f172a;
+                --navy:  #0369A1; 
                 --royal: #1e40af;
                 --gold: #d4af37;
                 --emerald: #059669;

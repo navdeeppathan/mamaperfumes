@@ -1,11 +1,11 @@
-/* NextBee B2B Wholesale Groceries System - Global Stylesheet */
+/* Mama Perfumes B2B Wholesale Groceries System - Global Stylesheet */
 /* Version: 1.0.0 | Last Updated: 2026-04-01 */
 
 /* ============================================
    CSS VARIABLES & DESIGN TOKENS
    ============================================ */
 
-   :root {
+:root {
     /* Primary Brand Colors */
     --primary-50: #eff6ff;
     --primary-100: #dbeafe;
@@ -74,42 +74,45 @@
     --border-active: rgba(37, 99, 235, 0.5);
 
     /* Spacing Scale */
-    --space-1: 0.25rem;   /* 4px */
-    --space-2: 0.5rem;    /* 8px */
-    --space-3: 0.75rem;   /* 12px */
-    --space-4: 1rem;      /* 16px */
-    --space-5: 1.25rem;   /* 20px */
-    --space-6: 1.5rem;    /* 24px */
-    --space-8: 2rem;      /* 32px */
-    --space-10: 2.5rem;   /* 40px */
-    --space-12: 3rem;     /* 48px */
-    --space-16: 4rem;     /* 64px */
+    --space-1: 0.25rem; /* 4px */
+    --space-2: 0.5rem; /* 8px */
+    --space-3: 0.75rem; /* 12px */
+    --space-4: 1rem; /* 16px */
+    --space-5: 1.25rem; /* 20px */
+    --space-6: 1.5rem; /* 24px */
+    --space-8: 2rem; /* 32px */
+    --space-10: 2.5rem; /* 40px */
+    --space-12: 3rem; /* 48px */
+    --space-16: 4rem; /* 64px */
 
     /* Typography Scale */
-    --text-xs: 0.75rem;   /* 12px */
-    --text-sm: 0.875rem;  /* 14px */
-    --text-base: 1rem;    /* 16px */
-    --text-lg: 1.125rem;  /* 18px */
-    --text-xl: 1.25rem;   /* 20px */
-    --text-2xl: 1.5rem;   /* 24px */
+    --text-xs: 0.75rem; /* 12px */
+    --text-sm: 0.875rem; /* 14px */
+    --text-base: 1rem; /* 16px */
+    --text-lg: 1.125rem; /* 18px */
+    --text-xl: 1.25rem; /* 20px */
+    --text-2xl: 1.5rem; /* 24px */
     --text-3xl: 1.875rem; /* 30px */
-    --text-4xl: 2.25rem;  /* 36px */
-    --text-5xl: 3rem;     /* 48px */
+    --text-4xl: 2.25rem; /* 36px */
+    --text-5xl: 3rem; /* 48px */
 
     /* Border Radius */
-    --radius-sm: 0.375rem;   /* 6px */
-    --radius-md: 0.5rem;     /* 8px */
-    --radius-lg: 0.75rem;    /* 12px */
-    --radius-xl: 1rem;       /* 16px */
-    --radius-2xl: 1.5rem;    /* 24px */
-    --radius-3xl: 2rem;      /* 32px */
+    --radius-sm: 0.375rem; /* 6px */
+    --radius-md: 0.5rem; /* 8px */
+    --radius-lg: 0.75rem; /* 12px */
+    --radius-xl: 1rem; /* 16px */
+    --radius-2xl: 1.5rem; /* 24px */
+    --radius-3xl: 2rem; /* 32px */
     --radius-full: 9999px;
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    --shadow-md:
+        0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+    --shadow-lg:
+        0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+    --shadow-xl:
+        0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
     --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.4);
     --shadow-glow-success: 0 0 20px rgba(16, 185, 129, 0.4);
     --shadow-glow-warning: 0 0 20px rgba(245, 158, 11, 0.4);
@@ -135,7 +138,9 @@
    CSS RESET & BASE STYLES
    ============================================ */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -150,7 +155,15 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
@@ -194,21 +207,31 @@ body {
    ============================================ */
 
 .text-gradient {
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-muted) 100%);
+    background: linear-gradient(
+        135deg,
+        var(--text-primary) 0%,
+        var(--text-muted) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .text-gradient-primary {
-    background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%);
+    background: linear-gradient(
+        135deg,
+        var(--primary-400) 0%,
+        var(--primary-600) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .font-mono {
-    font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
+    font-family:
+        "JetBrains Mono", "Fira Code", Consolas, Monaco, "Courier New",
+        monospace;
 }
 
 /* Heading Styles */
@@ -400,12 +423,13 @@ body {
 }
 
 @keyframes pulse-danger {
-    0%, 100% { 
-        opacity: 1; 
+    0%,
+    100% {
+        opacity: 1;
         box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
     }
-    50% { 
-        opacity: 0.8; 
+    50% {
+        opacity: 0.8;
         box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
     }
 }
@@ -429,12 +453,24 @@ body {
     letter-spacing: 0.02em;
 }
 
-.location-aisle-a { border-left-color: var(--primary-500); }
-.location-aisle-b { border-left-color: #8b5cf6; }
-.location-aisle-c { border-left-color: #ec4899; }
-.location-aisle-d { border-left-color: var(--success-500); }
-.location-aisle-e { border-left-color: var(--warning-500); }
-.location-aisle-f { border-left-color: #06b6d4; }
+.location-aisle-a {
+    border-left-color: var(--primary-500);
+}
+.location-aisle-b {
+    border-left-color: #8b5cf6;
+}
+.location-aisle-c {
+    border-left-color: #ec4899;
+}
+.location-aisle-d {
+    border-left-color: var(--success-500);
+}
+.location-aisle-e {
+    border-left-color: var(--warning-500);
+}
+.location-aisle-f {
+    border-left-color: #06b6d4;
+}
 
 /* ============================================
    CUSTOMER TIER STYLES
@@ -442,17 +478,29 @@ body {
 
 .tier-gold {
     border-left: 4px solid #fbbf24;
-    background: linear-gradient(90deg, rgba(251, 191, 36, 0.05) 0%, transparent 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(251, 191, 36, 0.05) 0%,
+        transparent 100%
+    );
 }
 
 .tier-silver {
     border-left: 4px solid #94a3b8;
-    background: linear-gradient(90deg, rgba(148, 163, 184, 0.05) 0%, transparent 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(148, 163, 184, 0.05) 0%,
+        transparent 100%
+    );
 }
 
 .tier-bronze {
     border-left: 4px solid #b45309;
-    background: linear-gradient(90deg, rgba(180, 83, 9, 0.05) 0%, transparent 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(180, 83, 9, 0.05) 0%,
+        transparent 100%
+    );
 }
 
 .tier-badge-gold {
@@ -482,7 +530,7 @@ body {
 }
 
 .driver-status::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     right: 0;
@@ -512,9 +560,15 @@ body {
 }
 
 @keyframes pulse-ring {
-    0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
 }
 
 /* ============================================
@@ -545,8 +599,13 @@ body {
 }
 
 @keyframes route-glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.6); }
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
+    }
 }
 
 /* Stop Indicators */
@@ -567,8 +626,13 @@ body {
 }
 
 @keyframes pulse-stop {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
 }
 
 /* ============================================
@@ -793,32 +857,50 @@ body {
 }
 
 .progress-fill::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
     animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* Skeleton Loading */
 .skeleton {
-    background: linear-gradient(90deg, var(--slate-800) 25%, var(--slate-700) 50%, var(--slate-800) 75%);
+    background: linear-gradient(
+        90deg,
+        var(--slate-800) 25%,
+        var(--slate-700) 50%,
+        var(--slate-800) 75%
+    );
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
     border-radius: var(--radius-md);
 }
 
 @keyframes skeleton-loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 /* ============================================
@@ -881,27 +963,31 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideUp {
-    from { 
+    from {
         opacity: 0;
         transform: translateY(20px);
     }
-    to { 
+    to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
 @keyframes scaleIn {
-    from { 
+    from {
         opacity: 0;
         transform: scale(0.9);
     }
-    to { 
+    to {
         opacity: 1;
         transform: scale(1);
     }
@@ -985,13 +1071,14 @@ body {
         background: white;
         color: black;
     }
-    
-    .glass, .glass-card {
+
+    .glass,
+    .glass-card {
         background: white;
         border: 1px solid #ccc;
         box-shadow: none;
     }
-    
+
     .no-print {
         display: none !important;
     }
@@ -1007,7 +1094,7 @@ body {
         --text-4xl: 1.875rem;
         --text-3xl: 1.5rem;
     }
-    
+
     .glass-card:hover {
         transform: none;
     }
@@ -1039,7 +1126,7 @@ body {
     :root {
         --border-default: rgba(255, 255, 255, 0.3);
     }
-    
+
     .glass-card {
         border-width: 2px;
     }
@@ -1047,7 +1134,9 @@ body {
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;

@@ -24,7 +24,8 @@ class Order extends Model
         'assigned_driver',
         'delivery_date',
         'xero_invoice_id',
-        'qb_invoice_id'      // 🔥 ADD THIS
+        'qb_invoice_id',
+              // 🔥 ADD THIS
 
     ];
     public function items()

@@ -13,6 +13,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -241,6 +242,198 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order updated successfully ✅');
     }
+
+    // public function placeOrdernew(Request $request)
+    // {
+    //     DB::beginTransaction();
+
+    //     try {
+
+    //         $userId = auth()->id();
+
+    //         $cartItems = Cart::with('product')
+    //             ->where('user_id', $userId)
+    //             ->get();
+
+    //         if ($cartItems->count() == 0) {
+
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Cart is empty'
+    //             ]);
+    //         }
+
+    //         $total = 0;
+
+    //         foreach ($cartItems as $item) {
+
+    //             $total += $item->product->price * $item->quantity;
+    //         }
+
+    //         $order = Order::create([
+    //             'user_id' => $userId,
+    //             'total_price' => $total,
+    //             'status' => 'created',
+    //             'payment_status' => 'pending',
+    //             'discount' => 0,
+    //             'is_active' => 1,
+    //         ]);
+
+    //         foreach ($cartItems as $item) {
+
+    //             OrderItem::create([
+    //                 'order_id' => $order->id,
+    //                 'product_id' => $item->product_id,
+    //                 'quantity' => $item->quantity,
+    //                 'price' => $item->product->price,
+    //                 'is_allocated' => 0,
+    //             ]);
+    //         }
+
+    //         // clear cart
+    //         Cart::where('user_id', $userId)->delete();
+
+    //         DB::commit();
+
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Order placed successfully',
+    //             'order_id' => $order->id
+    //         ]);
+
+    //     } catch (\Exception $e) {
+
+    //         DB::rollback();
+
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => $e->getMessage()
+    //         ]);
+    //     }
+    // }
+
+    public function placeOrdernew(Request $request)
+{
+    DB::beginTransaction();
+
+    try {
+
+        $userId = auth()->id();
+
+        $cartItems = Cart::with('product')
+            ->where('user_id', $userId)
+            ->get();
+
+        if ($cartItems->count() == 0) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Cart is empty'
+            ]);
+        }
+
+        $total = 0;
+
+        foreach ($cartItems as $item) {
+
+            $total += $item->product->price * $item->quantity;
+        }
+
+        $order = Order::create([
+            'user_id' => $userId,
+            'total_price' => $total,
+            'status' => 'created',
+            'payment_status' => 'pending',
+            'discount' => 0,
+            'is_active' => 1,
+        ]);
+
+        foreach ($cartItems as $item) {
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->product->price,
+                'is_allocated' => 0,
+            ]);
+        }
+
+        Cart::where('user_id', $userId)->delete();
+
+        $adminUrl = url('/admin/order/' . $order->id);
+
+        DB::commit();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Order placed successfully',
+            'order_id' => $order->id,
+            'admin_url' => $adminUrl,
+            'items' => $cartItems
+        ]);
+
+    } catch (\Exception $e) {
+
+        DB::rollback();
+
+        return response()->json([
+            'status' => false,
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
+public function verifyPasscode(Request $request)
+{
+    if ($request->passcode == env('ADMIN_ORDER_PASSCODE')) {
+
+        session(['admin_order_verified' => true]);
+
+        return redirect('/admin/order/' . $request->order_id);
+    }
+
+    return back()->with('error', 'Invalid passcode');
+}
+
+public function adminOrderPage($id)
+{
+    if (!session('admin_order_verified')) {
+
+        return view('admin.passcode', compact('id'));
+    }
+
+    $order = Order::with('items.product', 'user')->findOrFail($id);
+
+    return view('admin.order-details', compact('order'));
+}
+
+public function confirmOrder(Request $request, $id)
+{
+    $request->validate([
+        'method' => 'required',
+        'delivery_date' => 'required|date',
+        'delivery_instructions' => 'nullable|string',
+    ]);
+    $order = Order::findOrFail($id);
+
+    Payment::create([
+        'order_id' => $order->id,
+        'user_id' => $order->user_id,
+        'amount' => $order->total_price,
+        'method' => $request->method,
+        'status' => 'pending',
+    ]);
+
+    $order->update([
+        'status' => 'accepted',
+        'payment_status' => 'pending',
+        'delivery_date' => $request->delivery_date,
+        'delivery_instructions' => $request->delivery_instructions,
+    ]);
+
+    return back()->with('success', 'Order confirmed successfully');
+}
 
     public function placeOrder(Request $request)
     {

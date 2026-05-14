@@ -17,7 +17,7 @@ class LocationController extends Controller
             'locations.*.rack' => 'required|integer',
             'locations.*.basket' => 'required|integer',
             'locations.*.quantity' => 'required|integer',
-            'locations.*.expiry_date' => 'nullable|date',
+            // 'locations.*.expiry_date' => 'nullable|date',
         ]);
 
         foreach ($request->locations as $loc) {
@@ -27,7 +27,7 @@ class LocationController extends Controller
                 'rack' => $loc['rack'],
                 'basket' => $loc['basket'],
                 'quantity' => $loc['quantity'],
-                'expiry_date' => $loc['expiry_date'],
+                // 'expiry_date' => $loc['expiry_date'],
             ]);
         }
 

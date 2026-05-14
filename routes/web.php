@@ -78,6 +78,11 @@ Route::post('/admin/products/store', [ProductController::class, 'store'])->name(
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 
 
+Route::post('/place-order-new', [OrderController::class, 'placeOrdernew']);
+Route::get('/admin/order/{id}', [OrderController::class, 'adminOrderPage']);
+Route::post('/admin/order/verify-passcode', [OrderController::class, 'verifyPasscode']);
+Route::post('/admin/order/confirm/{id}', [OrderController::class, 'confirmOrder']);
+
 Route::post('/send-pricelist/{id}', [AuthController::class, 'sendPriceList'])
     ->name('send.pricelist');
 
@@ -99,20 +104,35 @@ Route::post('/locations/store', [LocationController::class, 'store'])
     ->name('locations.store');
 
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect('/main'); // ✅ LOGIN HAI → MAIN
-    }
+    // if (auth()->check()) {
+    //     return redirect('/main'); // ✅ LOGIN HAI → MAIN
+    // }
 
 
     $categories = Category::all();
-    $products = Product::with('category')->get(); // 👈 important
+    $products = Product::with(['category','locations'])->get(); // 👈 important
     $brands = Product::whereNotNull('brand')
         ->where('brand', '!=', '')
         ->distinct()
         ->pluck('brand');
-    return view('Landing.index', compact('categories', 'products', 'brands'));
+    return view('MamaPerfumes', compact('categories', 'products', 'brands'));
 });
 
+Route::post('/products/import', [ProductController::class, 'import'])
+    ->name('products.import');
+Route::get('/products/demo-excel', [ProductController::class, 'downloadDemoExcel'])
+    ->name('products.demo.excel');
+
+
+Route::middleware('auth')->group(function () {
+
+    Route::post('/add-to-cart', [CartController::class, 'addToCart']);
+
+    Route::get('/cart-items', [CartController::class, 'cartItems']);
+
+    Route::delete('/remove-cart/{id}', [CartController::class, 'removeCart']);
+
+});
 
 
 Route::get('/3dview/{product}', function ($product) {

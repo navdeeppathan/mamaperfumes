@@ -3,7 +3,7 @@
 @section('content')
     <style>
         :root {
-            --navy: #0f172a;
+            --navy:  #0369A1; 
             --royal: #1e40af;
             --gold: #d4af37;
             --emerald: #059669;
@@ -501,6 +501,13 @@
                         <i class="fas fa-plus"></i>
                         <span class="hidden sm:inline">Add Product</span>
                     </button>
+                    <button 
+                        onclick="document.getElementById('excel-upload-modal').classList.remove('hidden')"
+                        class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold text-white transition flex items-center gap-2">
+                        
+                        <i class="fas fa-file-excel"></i>
+                        <span class="hidden sm:inline">Import Excel</span>
+                    </button>
                     <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-sm font-bold text-slate-700 border-2 border-white shadow">
                         AD
                     </div>
@@ -535,131 +542,27 @@
                         
 
 
-                        <select id="locationFilter" class="bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-900">
+                        {{-- <select id="locationFilter" class="bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-900">
                             <option>All Locations</option>
                             <option>Aisle A - Cold Storage</option>
                             <option>Aisle B - Dry Goods</option>
                             <option>Aisle C - Frozen</option>
                             <option>Aisle D - Produce</option>
-                        </select>
+                        </select> --}}
 
                         <button onclick="openReportModal()" 
                             class="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm font-semibold">
                             📊 Current Report
                         </button>
                     </div>
-                    {{-- <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-semibold border border-red-200 hover:bg-red-100 transition">
-                            <i class="fas fa-exclamation-circle mr-1"></i> Expiring Soon (47)
-                        </button>
-                        <button class="px-4 py-2 bg-amber-50 text-amber-600 rounded-lg text-sm font-semibold border border-amber-200 hover:bg-amber-100 transition">
-                            <i class="fas fa-box-open mr-1"></i> Low Stock (18)
-                        </button>
-                    </div> --}}
+                    
                 </div>
             </div>
 
             <!-- Inventory Grid -->
             <div class="grid gap-4" id="inventory-grid">
 
-                <!-- Item 1: Milk with Multiple Locations & Lots -->
-                {{-- <div class="inventory-card rounded-2xl p-6 aisle-a">
-                    <div class="flex flex-col lg:flex-row gap-6 justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-start gap-4 mb-4">
-                                <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center text-3xl">🥛</div>
-                                <div>
-                                    <div class="flex items-center gap-3 mb-1">
-                                        <h3 class="text-lg font-bold text-slate-900">Fresh Whole Milk 2L</h3>
-                                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600 border border-slate-200">SKU: MILK-2L-FW</span>
-                                    </div>
-                                    <p class="text-sm text-slate-500">Dairy & Eggs • Refrigerated • 2L Carton</p>
-                                    <div class="flex items-center gap-4 mt-2 text-xs">
-                                        <span class="text-slate-500">MOQ: 12 units</span>
-                                        <span class="text-slate-500">Avg Monthly: 1,240 units</span>
-                                        <span class="text-emerald-600 font-medium">Stock Age: 2 days</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Multiple Locations -->
-                            <div class="space-y-3">
-                                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Storage Locations & Lot Details</p>
-
-                                <!-- Location 1 -->
-                                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">A-12-R3-B5</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">Aisle A, Rack 3, Basket 5</p>
-                                            <p class="text-xs text-slate-500">Lot: M240401-A • Received: Today</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm font-bold text-slate-900">144 units</p>
-                                            <span class="expiry-badge expiry-critical">Exp: Today</span>
-                                        </div>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Move</button>
-                                    </div>
-                                </div>
-
-                                <!-- Location 2 -->
-                                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">A-14-R2-B1</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">Aisle A, Rack 2, Basket 1</p>
-                                            <p class="text-xs text-slate-500">Lot: M240402-B • Received: Yesterday</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm font-bold text-slate-900">96 units</p>
-                                            <span class="expiry-badge expiry-warning">Exp: Tomorrow</span>
-                                        </div>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Move</button>
-                                    </div>
-                                </div>
-
-                                <!-- Location 3 -->
-                                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">A-16-R1-B3</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">Aisle A, Rack 1, Basket 3</p>
-                                            <p class="text-xs text-slate-500">Lot: M240403-C • Received: 2 days ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm font-bold text-slate-900">72 units</p>
-                                            <span class="expiry-badge expiry-good">Exp: 3 days</span>
-                                        </div>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Move</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Stock Alert Panel -->
-                        <div class="lg:w-64 space-y-3">
-                            <div class="p-4 bg-red-50 border border-red-200 rounded-xl">
-                                <p class="text-xs font-bold text-red-600 uppercase mb-1">Stock Alert</p>
-                                <p class="text-sm text-slate-900 font-medium">Current stock (312) below 2-week avg (620)</p>
-                                <p class="text-xs text-slate-500 mt-1">Recommend: Emergency reorder</p>
-                            </div>
-                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Quick Actions</p>
-                                <div class="space-y-2">
-                                    <button class="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-semibold text-white transition">Transfer Stock</button>
-                                    <button class="w-full py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-sm font-semibold transition">Create Promotion</button>
-                                    <button class="w-full py-2 bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-sm font-semibold transition">Mark for Delivery</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                
                 @foreach($products as $product)
                 <div 
                         class="inventory-card rounded-2xl p-6 aisle-{{ strtolower($product->aisle ?? 'a') }}"
@@ -707,9 +610,7 @@
                                     <div class="flex items-center gap-4 mt-2 text-xs">
                                         <span class="text-slate-500">MOQ: {{ $product->moq }}</span>
                                         <span class="text-slate-500">Stock: {{ $product->quantity }} units</span>
-                                        {{-- <span class="text-emerald-600 font-medium">
-                                            Shelf Life: {{ $product->shelf_life }} days
-                                        </span> --}}
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -727,38 +628,7 @@
                                     Storage Location
                                 </p>
 
-                                {{-- <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">
-                                            {{ $product->aisle }}-R{{ $product->rack }}-B{{ $product->basket }}
-                                        </span>
-
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">
-                                                Aisle {{ $product->aisle }}, Rack {{ $product->rack }}, Basket {{ $product->basket }}
-                                            </p>
-
-                                            <p class="text-xs text-slate-500">
-                                                Quantity: {{ $product->quantity }}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <p class="text-sm font-bold text-slate-900">
-                                            {{ $product->quantity }} units
-                                        </p>
-
-                                        @if($product->quantity < 50)
-                                            <span class="expiry-badge expiry-critical">Low Stock</span>
-                                        @elseif($product->quantity < 100)
-                                            <span class="expiry-badge expiry-warning">Medium</span>
-                                        @else
-                                            <span class="expiry-badge expiry-good">Good</span>
-                                        @endif
-                                    </div>
-                                </div> --}}
+                                
                                 @forelse($product->locations as $location)
                                     @php
                                         $today = \Carbon\Carbon::today();
@@ -786,9 +656,9 @@
                                                 <p class="text-xs text-slate-500">
                                                     Quantity: {{ $location->quantity }}
                                                 </p>
-                                                <p class="text-xs text-slate-500">
+                                                {{-- <p class="text-xs text-slate-500">
                                                     Expiry: {{ date('M d, Y', strtotime($location->expiry_date)) }}
-                                                </p>
+                                                </p> --}}
                                             </div>
                                         </div>
 
@@ -798,13 +668,7 @@
                                                 {{ $location->quantity }} units
                                             </p>
 
-                                            {{-- @if($location->quantity < 50)
-                                                <span class="expiry-badge expiry-critical">Low Stock</span>
-                                            @elseif($location->quantity < 100)
-                                                <span class="expiry-badge expiry-warning">Medium</span>
-                                            @else
-                                                <span class="expiry-badge expiry-good">Good</span>
-                                            @endif --}}
+                                        
 
                                             @if($location->quantity == 0)
                                                 <span class="expiry-badge expiry-critical">Out of Stock</span>
@@ -820,7 +684,7 @@
                                             @endif
 
                                             <!-- EXPIRY STATUS -->
-                                            @if($daysLeft < 0)
+                                            {{-- @if($daysLeft < 0)
                                                 <span class="expiry-badge expiry-critical">Expired</span>
 
                                             @elseif($daysLeft <= 2)
@@ -837,7 +701,7 @@
                                                 <span class="expiry-badge expiry-good">
                                                     Safe
                                                 </span>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
 
@@ -933,135 +797,61 @@
                 </div>
                 @endforeach
 
-                <!-- Item 2: Eggs with Single Location -->
-                {{-- <div class="inventory-card rounded-2xl p-6 aisle-a">
-                    <div class="flex flex-col lg:flex-row gap-6 justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-start gap-4 mb-4">
-                                <div class="w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center text-3xl">🥚</div>
-                                <div>
-                                    <div class="flex items-center gap-3 mb-1">
-                                        <h3 class="text-lg font-bold text-slate-900">Free-Range Eggs Large (12pk)</h3>
-                                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600 border border-slate-200">SKU: EGG-12-LRG</span>
-                                    </div>
-                                    <p class="text-sm text-slate-500">Dairy & Eggs • Refrigerated • 12 Pack</p>
-                                    <div class="flex items-center gap-4 mt-2 text-xs">
-                                        <span class="text-slate-500">MOQ: 20 cartons</span>
-                                        <span class="text-slate-500">Avg Monthly: 890 cartons</span>
-                                        <span class="text-amber-600 font-medium">Stock Age: 5 days</span>
-                                    </div>
-                                </div>
-                            </div>
+               
 
-                            <div class="space-y-3">
-                                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Storage Locations</p>
-                                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">A-08-R4-B2</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">Aisle A, Rack 4, Basket 2</p>
-                                            <p class="text-xs text-slate-500">Lot: E240331-B • Received: 5 days ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm font-bold text-slate-900">180 cartons</p>
-                                            <span class="expiry-badge expiry-warning">Exp: Tomorrow</span>
-                                        </div>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Move</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+        </div>
 
-                        <div class="lg:w-64 space-y-3">
-                            <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                                <p class="text-xs font-bold text-amber-600 uppercase mb-1">Stock Comparison</p>
-                                <p class="text-sm text-slate-900 font-medium">Current (180) vs Avg (890)</p>
-                                <div class="mt-2 h-2 bg-slate-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-amber-500 w-[20%]"></div>
-                                </div>
-                                <p class="text-xs text-slate-500 mt-1">20% of monthly average</p>
-                            </div>
-                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                                <div class="space-y-2">
-                                    <button class="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-semibold text-white transition">Add Location</button>
-                                    <button class="w-full py-2 bg-amber-100 text-amber-700 border border-amber-200 rounded-lg text-sm font-semibold transition">Flash Sale</button>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Excel Upload Modal -->
+        <div id="excel-upload-modal"
+            class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+
+            <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
+                
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        Import Products
+                    </h2>
+
+                    <button
+                        onclick="document.getElementById('excel-upload-modal').classList.add('hidden')"
+                        class="text-slate-500 hover:text-red-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <form action="{{ route('products.import') }}"
+                    method="POST"
+                    enctype="multipart/form-data">
+
+                    @csrf
+
+                    <div class="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center">
+                        <i class="fas fa-file-excel text-4xl text-emerald-500 mb-3"></i>
+
+                        <input type="file"
+                            name="file"
+                            accept=".xlsx,.xls,.csv"
+                            class="block w-full text-sm text-slate-600">
                     </div>
-                </div> --}}
 
-                <!-- Item 3: Rice - Dry Goods, Multiple Locations -->
-                {{-- <div class="inventory-card rounded-2xl p-6 aisle-b">
-                    <div class="flex flex-col lg:flex-row gap-6 justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-start gap-4 mb-4">
-                                <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center text-3xl">🍚</div>
-                                <div>
-                                    <div class="flex items-center gap-3 mb-1">
-                                        <h3 class="text-lg font-bold text-slate-900">Basmati Rice 5kg</h3>
-                                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600 border border-slate-200">SKU: RICE-BAS-5K</span>
-                                    </div>
-                                    <p class="text-sm text-slate-500">Dry Goods • Ambient • 5kg Bag</p>
-                                    <div class="flex items-center gap-4 mt-2 text-xs">
-                                        <span class="text-slate-500">MOQ: 10 bags</span>
-                                        <span class="text-slate-500">Avg Monthly: 340 bags</span>
-                                        <span class="text-emerald-600 font-medium">Stock Age: 45 days</span>
-                                    </div>
-                                </div>
-                            </div>
+                    <button type="submit"
+                            class="w-full mt-5 bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-semibold transition">
+                        Upload Excel
+                    </button>
+                </form>
+                <!-- Download Demo Excel -->
+                <a href="{{ route('products.demo.excel') }}"
+                class="w-full mt-3 border border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2">
 
-                            <div class="space-y-3">
-                                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Storage Locations</p>
+                    <i class="fas fa-download"></i>
 
-                                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">B-04-R1-B8</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">Aisle B, Rack 1, Basket 8</p>
-                                            <p class="text-xs text-slate-500">Lot: R240215-A • Exp: Dec 2026</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm font-bold text-slate-900">120 bags</p>
-                                            <span class="expiry-badge expiry-good">Exp: 20 months</span>
-                                        </div>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Move</button>
-                                    </div>
-                                </div>
+                    Download Demo Excel
+                </a>
 
-                                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                    <div class="flex items-center gap-3">
-                                        <span class="location-pill px-3 py-1 rounded-full text-xs font-bold">B-06-R2-B4</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-900">Aisle B, Rack 2, Basket 4</p>
-                                            <p class="text-xs text-slate-500">Lot: R240301-B • Exp: Jan 2027</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm font-bold text-slate-900">85 bags</p>
-                                            <span class="expiry-badge expiry-good">Exp: 21 months</span>
-                                        </div>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Move</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lg:w-64 space-y-3">
-                            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                                <p class="text-xs font-bold text-emerald-600 uppercase mb-1">Stock Healthy</p>
-                                <p class="text-sm text-slate-900 font-medium">205 bags (60% of monthly avg)</p>
-                                <p class="text-xs text-slate-500 mt-1">No action required</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
+                <div class="mt-4 text-sm text-slate-500">
+                    Supported formats: XLSX, XLS, CSV
+                </div>
             </div>
         </div>
   
@@ -1132,10 +922,10 @@
                     <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Product Type</label>
                             <select name="product_type" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2">
-                                <option value="A - Cold Storage">A - Cold Storage</option>
-                                <option value="B - Dry Goods">B - Dry Goods</option>
-                                <option value="C - Frozen">C - Frozen</option>
-                                <option value="D - Produce">D - Produce</option>
+                                <option value="Phone">Phone</option>
+                                <option value="Charger">Charger</option>
+                                <option value="USB Cable">USB Cable</option>
+                                <option value="Headphone">Headphone</option>
                             </select>
                         </div>
                 </div>
@@ -1151,30 +941,7 @@
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
-                    {{-- <h3 class="text-sm font-bold text-slate-900 mb-4">Primary Location</h3>
-                    <div class="grid md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Aisle</label>
-                            <select name="aisle" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2">
-                                <option value="A - Cold Storage">A - Cold Storage</option>
-                                <option value="B - Dry Goods">B - Dry Goods</option>
-                                <option value="C - Frozen">C - Frozen</option>
-                                <option value="D - Produce">D - Produce</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Rack</label>
-                            <input type="number" name="rack"  class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900" placeholder="1">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Basket</label>
-                            <input type="number"name="basket" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900" placeholder="1">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Quantity</label>
-                            <input type="number" name="quantity" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900" placeholder="0">
-                        </div>
-                    </div> --}}
+                   
                      <!-- Optional Fields -->
                     <div class="grid md:grid-cols-2 gap-4 mt-4">
                         <div>
@@ -1248,11 +1015,12 @@
                     <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Product Type</label>
                             <select name="product_type" id="edit_type" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2">
-                                <option value="A - Cold Storage">A - Cold Storage</option>
-                                <option value="B - Dry Goods">B - Dry Goods</option>
-                                <option value="C - Frozen">C - Frozen</option>
-                                <option value="D - Produce">D - Produce</option>
+                               <option value="Phone">Phone</option>
+                                <option value="Charger">Charger</option>
+                                <option value="USB Cable">USB Cable</option>
+                                <option value="Headphone">Headphone</option>
                             </select>
+                            
                         </div>
                 </div>
 
@@ -1266,30 +1034,7 @@
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
-                    {{-- <h3 class="text-sm font-bold text-slate-900 mb-4">Primary Location</h3> --}}
-                    {{-- <div class="grid md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Aisle</label>
-                            <select name="aisle" id="edit_aisle" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2">
-                                <option value="A - Cold Storage">A - Cold Storage</option>
-                                <option value="B - Dry Goods">B - Dry Goods</option>
-                                <option value="C - Frozen">C - Frozen</option>
-                                <option value="D - Produce">D - Produce</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Rack</label>
-                            <input type="number" name="rack" id="edit_rack"  class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900" placeholder="1">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Basket</label>
-                            <input type="number"name="basket"  id="edit_basket" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900" placeholder="1">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Quantity</label>
-                            <input type="number" name="quantity" id="edit_quantity" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900" placeholder="0">
-                        </div>
-                    </div> --}}
+                    
                      <!-- Optional Fields -->
                     <div class="grid md:grid-cols-2 gap-4 mt-4">
                         <div>
@@ -1394,15 +1139,16 @@
                         placeholder="Qty" type="number" 
                         class="border p-2 rounded">
 
-                    <input name="locations[${index}][expiry_date]" 
-                        placeholder="Expiry" type="date" 
-                        class="border p-2 rounded">
+                    
                 </div>
             `;
 
             index++;
         }
     </script>
+    {{-- <input name="locations[${index}][expiry_date]" 
+                        placeholder="Expiry" type="date" 
+                        class="border p-2 rounded"> --}}
 
     <script>
         let products = @json($products);

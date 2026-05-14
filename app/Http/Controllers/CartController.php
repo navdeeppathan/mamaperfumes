@@ -204,4 +204,87 @@ public function applyCoupon(Request $request)
         ]
     ]);
 }
+
+    public function addToCart(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity'   => 'required|integer',
+        ]);
+
+        $userId = auth()->id(); // logged in user
+
+        $cart = Cart::where('user_id', $userId)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        if ($cart) {
+
+            // update quantity if already exists
+            // $cart->quantity += $request->quantity;
+            // $cart->save();
+            // UPDATE QUANTITY
+            $cart->quantity += $request->quantity;
+
+            // REMOVE IF 0 OR LESS
+            if ($cart->quantity <= 0) {
+
+                $cart->delete();
+
+            } else {
+
+                $cart->save();
+
+            }
+
+        } else {
+
+            // create new cart item
+            Cart::create([
+                'user_id'   => $userId,
+                'product_id'=> $request->product_id,
+                'quantity'  => $request->quantity,
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Product added to cart successfully'
+        ]);
+    }
+
+    // Get Cart Items
+    public function cartItems()
+    {
+        $cartItems = Cart::with('product.category')
+            ->where('user_id', auth()->id())
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $cartItems
+        ]);
+    }
+
+    // Remove Cart Item
+    public function removeCart($id)
+    {
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('id', $id)
+            ->first();
+
+        if (!$cart) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Cart item not found'
+            ]);
+        }
+
+        $cart->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Item removed from cart'
+        ]);
+    }
 }

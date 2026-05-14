@@ -2,14 +2,35 @@
 // app/Http/Controllers/ProductController.php
 namespace App\Http\Controllers;
 
+use App\Exports\ProductsDemoExport;
+use App\Imports\ProductsImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Product;
 use App\Models\Category;
+use Maatwebsite\Excel\Excel;
 
 class ProductController extends Controller
 {
+     public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new ProductsImport, $request->file('file'));
+
+        return back()->with('success', 'Products Imported Successfully');
+    }
+
+    public function downloadDemoExcel()
+    {
+        return Excel::download(
+            new ProductsDemoExport,
+            'products_demo.xlsx'
+        );
+    }
     public function index()
     {
         $products = Product::with('category')->get();
