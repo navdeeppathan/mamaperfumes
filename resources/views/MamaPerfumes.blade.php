@@ -1208,13 +1208,13 @@
     <input class="dinp" id="bizPhone" value="{{ Auth::user()->phone ?? '' }}" placeholder="WhatsApp / Phone Number" type="tel">
     <div class="drtot">
       <span class="drtot-l">Estimated Total</span>
-      <span class="drtot-v" id="dtotal">AED 0</span>
+      <span class="drtot-v" id="dtotal">£ 0</span>
     </div>
     <button class="btn-wa-dr" onclick="sendOrder()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Send Order via WhatsApp
     </button>
-    <div class="drnote">Prices in AED · Proforma invoice provided on WhatsApp</div>
+    <div class="drnote">Prices in £ · Proforma invoice provided on WhatsApp</div>
   </div>
 </div>
 
@@ -1585,7 +1585,7 @@ const products = {!! json_encode(
 //         <div class="pcard-notes">${p.notes.map(n=>`<span class="pnote">${n}</span>`).join('')}</div>
 //         <div class="pcard-foot">
 //           <div class="pcard-price">
-//             <span class="pv">AED ${p.price}</span><span class="pu">/ unit</span>
+//             <span class="pv">£ ${p.price}</span><span class="pu">/ unit</span>
 //             <span class="pm">Min. ${p.moq} units</span>
 //           </div>
 //           <button class="btn-add${ic>0?' in':''}" onclick="addItem(${p.id})" id="pb${p.id}">
@@ -1706,7 +1706,7 @@ function renderP(){
                     <div class="pcard-price">
 
                         <span class="pv">
-                            AED ${p.price}
+                            £ ${p.price}
                         </span>
 
                         <span class="pu">
@@ -1770,7 +1770,7 @@ function filterP(b, c){
 //   const items=Object.values(cart);
 //   const total=items.reduce((s,i)=>s+i.qty*i.price,0);
 //   document.getElementById('cbadge').textContent=items.length;
-//   document.getElementById('dtotal').textContent=`AED ${total.toLocaleString()}`;
+//   document.getElementById('dtotal').textContent=`£ ${total.toLocaleString()}`;
 //   const body=document.getElementById('drb');
 //   if(!items.length){body.innerHTML='<div class="dr-empty">Your order is empty.<br>Browse the collection to begin.</div>';return;}
 //   body.innerHTML=items.map(it=>`
@@ -1778,7 +1778,7 @@ function filterP(b, c){
 //       <div class="drico">🫙</div>
 //       <div style="flex:1">
 //         <div class="drnm">${it.name}</div>
-//         <div class="drpr">AED ${it.price} × ${it.qty} = AED ${(it.price*it.qty).toLocaleString()}</div>
+//         <div class="drpr">£ ${it.price} × ${it.qty} = £ ${(it.price*it.qty).toLocaleString()}</div>
 //         <div class="drqr">
 //           <button class="qbtn" onclick="adjQ(${it.id},-${it.moq})">−</button>
 //           <span class="qval">${it.qty}</span>
@@ -1913,7 +1913,7 @@ function updateCart(){
         items.length;
 
     document.getElementById('dtotal').textContent =
-        `AED ${total.toLocaleString()}`;
+        `£ ${total.toLocaleString()}`;
 
     const body = document.getElementById('drb');
 
@@ -1944,13 +1944,13 @@ function updateCart(){
 
                 <div class="drpr">
 
-                    AED ${it.price}
+                    £ ${it.price}
                     ×
                     ${it.qty}
 
                     =
 
-                    AED ${(it.price * it.qty)
+                    £ ${(it.price * it.qty)
                         .toLocaleString()}
 
                 </div>
@@ -2108,8 +2108,8 @@ function toggleCart(){
 //   const ph=document.getElementById('bizPhone').value.trim()||'Not provided';
 //   const total=items.reduce((s,i)=>s+i.qty*i.price,0);
 //   let m=`Assalamu Alaikum 🕌\n\n*WHOLESALE ORDER — Noor Al Oud*\n\n🏪 *Business:* ${biz}\n📱 *Contact:* ${ph}\n\n*ORDER:*\n`;
-//   items.forEach(i=>{m+=`• ${i.name} (${i.arabic}) × ${i.qty} units @ AED ${i.price} = AED ${(i.qty*i.price).toLocaleString()}\n`;});
-//   m+=`\n💰 *Est. Total: AED ${total.toLocaleString()}*\n\nPlease confirm and send proforma invoice. JazakAllah Khair.`;
+//   items.forEach(i=>{m+=`• ${i.name} (${i.arabic}) × ${i.qty} units @ £ ${i.price} = £ ${(i.qty*i.price).toLocaleString()}\n`;});
+//   m+=`\n💰 *Est. Total: £ ${total.toLocaleString()}*\n\nPlease confirm and send proforma invoice. JazakAllah Khair.`;
 //   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(m)}`,'_blank');
 // }
 
@@ -2183,15 +2183,15 @@ async function sendOrder(){
             m +=
 `• ${i.name} (${i.arabic})
 × ${i.qty} units
-@ AED ${i.price}
-= AED ${(i.qty*i.price).toLocaleString()}
+@ £ ${i.price}
+= £ ${(i.qty*i.price).toLocaleString()}
 
 `;
 
         });
 
         m +=
-`💰 *Est. Total: AED ${total.toLocaleString()}*
+`💰 *Est. Total: £ ${total.toLocaleString()}*
 
 📦 *Admin Order Link:*
 ${data.admin_url}
