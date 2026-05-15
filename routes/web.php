@@ -125,7 +125,7 @@ Route::get('/all-products', function () {
 
 
     $categories = Category::all();
-    $products = Product::with(['category','locations'])->limit(25)->get(); // 👈 important
+    $products = Product::with(['category','locations'])->get(); // 👈 important
     $brands = Product::whereNotNull('brand')
         ->where('brand', '!=', '')
         ->distinct()
