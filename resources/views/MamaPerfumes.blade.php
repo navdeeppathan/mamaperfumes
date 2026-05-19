@@ -1532,6 +1532,10 @@
 @endif
 
 <script>
+    const isLoggedIn = @json(Auth::check());
+</script>
+
+<script>
 
 
     function toggleProfile() {
@@ -1856,22 +1860,29 @@ function renderP(){
                 </div>
 
                 <div class="pcard-foot">
+                  ${
+                    isLoggedIn
+                    ? `
 
-                    <div class="pcard-price">
+                      <div class="pcard-price">
 
-                        <span class="pv">
-                            £ ${p.price}
-                        </span>
+                          <span class="pv">
+                              £ ${p.price}
+                          </span>
 
-                        <span class="pu">
-                            / unit
-                        </span>
+                          <span class="pu">
+                              / unit
+                          </span>
 
-                        <span class="pm">
-                            Min. ${p.moq} units
-                        </span>
+                          <span class="pm">
+                              Min. ${p.moq} units
+                          </span>
 
-                    </div>
+                      </div>
+
+                    `
+                    : ``
+                  }
 
                     <button 
                         class="btn-add ${ic > 0 ? 'in' : ''}" 

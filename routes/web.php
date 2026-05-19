@@ -82,6 +82,10 @@ Route::post('/place-order-new', [OrderController::class, 'placeOrdernew']);
 Route::get('/admin/order/{id}', [OrderController::class, 'adminOrderPage']);
 Route::post('/admin/order/verify-passcode', [OrderController::class, 'verifyPasscode']);
 Route::post('/admin/order/confirm/{id}', [OrderController::class, 'confirmOrder']);
+Route::get('/payment-success/{id}', [OrderController::class, 'paymentSuccessForm']);
+
+Route::post('/payment-success/{id}', [OrderController::class, 'submitPaymentSuccess']);
+
 
 Route::post('/send-pricelist/{id}', [AuthController::class, 'sendPriceList'])
     ->name('send.pricelist');

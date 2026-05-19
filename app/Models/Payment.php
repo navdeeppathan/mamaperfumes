@@ -14,7 +14,9 @@ class Payment extends Model
         'method',
         'status',
         'account_name',
-        'cheque_number'
+        'cheque_number',
+        'payment_screenshot',
+        'transaction_id'
     ];
 
      public function order()

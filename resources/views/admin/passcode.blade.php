@@ -3,9 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Verification</title>
+
+    <title>
+        Admin Verification
+    </title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -13,81 +18,177 @@
 
     <style>
 
+        :root {
+            --bg:      #faf8f5;
+            --white:   #ffffff;
+            --ink:     #0f0d0a;
+            --ink2:    #1e1a14;
+            --warm:    #2e2820;
+            --muted:   #7a7065;
+            --dim:     #b8b0a0;
+            --ghost:   #e8e2d8;
+            --border:  rgba(180,140,60,.15);
+            --gold:    #b8932a;
+            --gold2:   #d4ae50;
+            --gold3:   #e8c868;
+            --goldlt:  #fdf5e0;
+        }
+
         body{
-            font-family: 'Inter', sans-serif;
-            background:#F0F4FA;
+            font-family:'Inter',sans-serif;
+            background:var(--bg);
+            color:var(--ink);
         }
 
         .font-display{
-            font-family: 'Syne', sans-serif;
+            font-family:'Syne',sans-serif;
+        }
+
+        .lux-card{
+            background:var(--white);
+            border:1px solid var(--border);
+            border-radius:32px;
+            overflow:hidden;
+            box-shadow:0 10px 40px rgba(0,0,0,.05);
+        }
+
+        .lux-input{
+            width:100%;
+            height:72px;
+            border-radius:22px;
+            border:1px solid var(--ghost);
+            background:var(--bg);
+            color:var(--ink);
+            text-align:center;
+            font-size:34px;
+            letter-spacing:14px;
+            outline:none;
+            transition:.25s ease;
+        }
+
+        .lux-input:focus{
+            border-color:var(--gold2);
+            box-shadow:0 0 0 4px rgba(212,174,80,.08);
+        }
+
+        .lux-btn{
+            width:100%;
+            height:58px;
+            border:none;
+            border-radius:18px;
+            background:#000;
+            color:#fff;
+            font-weight:600;
+            font-size:15px;
+            letter-spacing:.08em;
+            text-transform:uppercase;
+            transition:.3s ease;
+            cursor:pointer;
+        }
+
+        .lux-btn:hover{
+            background:var(--warm);
+            transform:translateY(-1px);
+        }
+
+        .lux-error{
+            background:#fff5f5;
+            border:1px solid #fecaca;
+            color:#dc2626;
+            padding:16px 18px;
+            border-radius:18px;
+            font-size:14px;
         }
 
     </style>
 
 </head>
+
 <body>
 
 <div class="min-h-screen flex items-center justify-center p-6">
 
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+    <div class="w-full max-w-md">
 
-        <div class="bg-gradient-to-r from-sky-700 to-blue-900 p-8 text-white text-center">
+        <div class="lux-card">
 
-            <div class="w-20 h-20 mx-auto rounded-full bg-white/20 flex items-center justify-center text-4xl mb-5">
-                🔒
+            <!-- HEADER -->
+            <div
+                class="p-10 text-white text-center"
+                style="background:linear-gradient(135deg,#0f0d0a 0%,#1e1a14 100%)"
+            >
+
+                <div class="w-24 h-24 mx-auto rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-5xl mb-6">
+                    🔒
+                </div>
+
+                <div class="text-sm uppercase tracking-[4px] text-[#e8c868] mb-4">
+                    Mama Perfumes
+                </div>
+
+                <h1 class="font-display text-4xl font-bold">
+                    Admin Verification
+                </h1>
+
+                <p class="text-gray-300 mt-4 leading-7">
+                    Enter your secure 4 digit admin passcode to continue.
+                </p>
+
             </div>
 
-            <h1 class="font-display text-3xl font-bold">
-                Admin Verification
-            </h1>
+            <!-- BODY -->
+            <div class="p-8 md:p-10">
 
-            <p class="text-sm text-blue-100 mt-3">
-                Enter 4 digit security passcode
-            </p>
+                @if(session('error'))
 
-        </div>
+                    <div class="lux-error mb-6">
+                        {{ session('error') }}
+                    </div>
 
-        <div class="p-8">
+                @endif
 
-            @if(session('error'))
-                <div class="mb-5 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm">
-                    {{ session('error') }}
-                </div>
-            @endif
+                <form
+                    method="POST"
+                    action="{{ url('/admin/order/verify-passcode') }}"
+                >
 
-            <form method="POST" action="{{ url('/admin/order/verify-passcode') }}">
-
-                @csrf
-
-                <input type="hidden"
-                       name="order_id"
-                       value="{{ $id }}">
-
-                <div class="mb-6">
-
-                    <label class="block text-sm font-semibold text-slate-700 mb-3">
-                        Security Passcode
-                    </label>
+                    @csrf
 
                     <input
-                        type="password"
-                        name="passcode"
-                        maxlength="4"
-                        required
-                        placeholder="••••"
-                        class="w-full h-16 rounded-2xl border-2 border-slate-200 bg-slate-50 text-center text-3xl tracking-[12px] focus:outline-none focus:border-sky-700 transition"
+                        type="hidden"
+                        name="order_id"
+                        value="{{ $id }}"
                     >
 
-                </div>
+                    <!-- PASSCODE -->
+                    <div class="mb-8">
 
-                <button
-                    type="submit"
-                    class="w-full h-14 rounded-2xl bg-gradient-to-r from-sky-700 to-blue-900 text-white font-bold text-lg hover:scale-[1.02] transition"
-                >
-                    Verify Access
-                </button>
+                        <label class="block text-sm font-semibold mb-4">
+                            Security Passcode
+                        </label>
 
-            </form>
+                        <input
+                            type="password"
+                            name="passcode"
+                            maxlength="4"
+                            required
+                            placeholder="••••"
+                            class="lux-input"
+                        >
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button
+                        type="submit"
+                        class="lux-btn"
+                    >
+                        Verify Access
+                    </button>
+
+                </form>
+
+            </div>
 
         </div>
 

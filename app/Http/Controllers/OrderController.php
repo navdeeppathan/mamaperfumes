@@ -432,7 +432,106 @@ public function confirmOrder(Request $request, $id)
         'delivery_instructions' => $request->delivery_instructions,
     ]);
 
-    return back()->with('success', 'Order confirmed successfully');
+     // CUSTOMER WHATSAPP MESSAGE
+    // CUSTOMER WHATSAPP MESSAGE
+    $message = "
+    Your order #{$order->id} has been confirmed.
+
+    Payment Method: {$request->method}
+    ";
+
+    if ($request->method == 'bank_transfer') {
+
+        $message .= "
+
+    Bank Details:
+
+    Bank: " . env('BANK_NAME') . "
+
+    Account Name: " . env('BANK_ACCOUNT_NAME') . "
+
+    Account Number: " . env('BANK_ACCOUNT_NUMBER') . "
+
+    IBAN: " . env('BANK_IBAN') . "
+
+    ";
+
+        $paymentLink = url('/payment-success/' . $order->id);
+
+        $message .= "
+    After payment upload receipt here:
+
+    {$paymentLink}
+    ";
+    }
+
+    $encodedMessage = urlencode($message);
+
+    $whatsappUrl = "https://wa.me/" . $order->user->phone . "?text=" . $encodedMessage;
+
+    return redirect($whatsappUrl);
+
+}
+
+public function paymentSuccessForm($id)
+{
+    $order = Order::findOrFail($id);
+
+    return view('payment-success', compact('order'));
+}
+
+public function submitPaymentSuccess(Request $request, $id)
+{
+    $request->validate([
+        'transaction_id' => 'required',
+        'payment_screenshot' => 'required|image',
+    ]);
+
+    $order = Order::findOrFail($id);
+
+    $payment = Payment::where('order_id', $order->id)->first();
+
+    // SAVE IMAGE IN PUBLIC/PAYMENTS
+    $image = time().'_'.$request->file('payment_screenshot')->getClientOriginalName();
+
+    $request->file('payment_screenshot')->move(
+        public_path('payments'),
+        $image
+    );
+
+    $payment->update([
+        'transaction_id' => $request->transaction_id,
+        'payment_screenshot' => 'payments/'.$image,
+        'status' => 'submitted',
+    ]);
+
+    // ADMIN WHATSAPP MESSAGE
+    $msg = "
+    Payment proof submitted.
+
+    Order ID: #{$order->id}
+
+    Customer: {$order->user->name}
+
+    Transaction ID: {$request->transaction_id}
+
+    Amount: £{$payment->amount}
+    ";
+
+        $imageUrl = asset($payment->payment_screenshot);
+
+        $msg .= "
+
+    Payment Screenshot:
+    {$imageUrl}";
+
+    $adminWhatsapp = env('ADMIN_WHATSAPP');
+
+    $encodedMessage = urlencode($msg);
+
+    return redirect(
+        "https://wa.me/".$adminWhatsapp."?text=".$encodedMessage
+    );
 }
 
     public function placeOrder(Request $request)
